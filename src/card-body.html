@@ -1,0 +1,434 @@
+<title>Hẹn Hà Nội</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+/* Layout: Shelf Pop applied to a personal invite. Cream ground, one paper card: a halftone ink scene of Hồ Gươm on top (cobalt ink, yellow as the single flat second ink), the letter, two ticket cards to choose from, a note field and a shelf edge button. Single light look, as Shelf Pop defines only Screen and Print. */
+:root{
+  --cocoa:#4b2a22;
+  --cream:#f4e6cf;
+  --cobalt:#1f5bb5;
+  --paper:#fffaf2;
+  --mocha:#7a5648;
+  --sand:#d9c3a3;
+  --spot:#ffd23a;
+  --burgundy:#6e2438;
+  --f-display:"Barlow Condensed","Arial Narrow",sans-serif;
+  --f-sans:Barlow,Arial,sans-serif;
+  --f-serif:"Playfair Display",Georgia,serif;
+  --space4:4px;--space8:8px;--space16:16px;--space24:24px;--space32:32px;--space48:48px;
+  --radiusSm:6px;--radiusMd:16px;--radiusPill:999px;
+  --elev1:0 1px 0 rgba(75,42,34,.08),0 3px 8px -4px rgba(75,42,34,.14);
+  --elev2:0 2px 0 rgba(75,42,34,.10),0 10px 20px -10px rgba(75,42,34,.24);
+  --elev3:0 4px 0 rgba(75,42,34,.12),0 18px 32px -14px rgba(75,42,34,.32);
+  --elevPress:0 4px 0 rgba(75,42,34,.28);
+  --elevPressed:0 1px 0 rgba(75,42,34,.28);
+  --easeOut:cubic-bezier(.2,0,0,1);
+  --easeSpring:cubic-bezier(.34,1.56,.64,1);
+  --durPress:100ms;--durFeedback:200ms;--durReveal:300ms;--durPop:450ms;--durDraw:1200ms;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{background:var(--cream);color:var(--cocoa);overflow-x:clip}
+body{
+  margin:0;font:400 18px/1.55 var(--f-sans);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:var(--space32) var(--space48);
+  -webkit-tap-highlight-color:transparent;
+}
+.wrap{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space24)}
+
+/* header stamp */
+.top{display:flex;justify-content:center}
+.stamp{display:inline-flex;align-items:center;gap:var(--space8);padding:6px 14px;border:2px solid var(--cocoa);border-radius:var(--radiusPill);font:700 14px/1.2 var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--cocoa)}
+
+/* card */
+.card{background:var(--paper);border-radius:var(--radiusMd);box-shadow:var(--elev2);padding:var(--space16);display:flex;flex-direction:column;gap:var(--space24)}
+@media (min-width:560px){.card{padding:var(--space24)}}
+
+/* scene */
+.scene{position:relative;aspect-ratio:16/10;max-width:100%;border-radius:12px;overflow:hidden;background:var(--cream);border:2px solid var(--cocoa);touch-action:pan-y;cursor:grab}
+.scene{}
+@media (max-width:460px){.scene{aspect-ratio:5/4}}
+.scene svg,.scene canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.scene canvas{pointer-events:none}
+.scene .lyr{transition:transform .5s var(--easeOut)}
+.ink{fill:none;stroke:var(--cobalt);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.ink.thin{stroke-width:1.4}
+.ink.bold{stroke-width:3}
+.tone1{fill:url(#dotsLoose)}
+.tone2{fill:url(#dotsDense)}
+.solid{fill:var(--cobalt)}
+.spotfill{fill:var(--spot)}
+.paperfill{fill:var(--paper)}
+.ripple{fill:none;stroke:var(--cobalt);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:46 18 12 18;animation:flow 9s linear infinite}
+.ripple.r2{animation-duration:13s;animation-direction:reverse;opacity:.7}
+@keyframes flow{to{stroke-dashoffset:-188}}
+.glint{fill:var(--spot);stroke:var(--cobalt);stroke-width:1.2;animation:twinkle 2.6s ease-in-out infinite}
+.refl{stroke:var(--spot);stroke-width:3;stroke-linecap:round;animation:twinkle 3.2s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:1}50%{opacity:.35}}
+.sway{transform-box:fill-box;transform-origin:50% 0;animation:sway 6s ease-in-out infinite}
+@keyframes sway{0%,100%{transform:rotate(1.5deg)}50%{transform:rotate(-1.5deg)}}
+/* ink draw: only when JS adds .drawing, so lines are visible without script */
+.drawing .ink{stroke-dasharray:1;stroke-dashoffset:1;animation:draw var(--durDraw) var(--easeOut) forwards;animation-delay:var(--d,0ms)}
+.drawing .tone1,.drawing .tone2,.drawing .solid,.drawing .spotfill{opacity:0;animation:fade var(--durReveal) var(--easeOut) forwards;animation-delay:calc(var(--durDraw) - 200ms)}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fade{to{opacity:1}}
+.label{position:absolute;left:12px;bottom:10px;margin:0;padding:4px 12px;background:var(--paper);border:2px solid var(--cocoa);border-radius:var(--radiusPill);font:800 clamp(18px,4.6vw,24px)/1 var(--f-display);letter-spacing:.06em;text-transform:uppercase;color:var(--cocoa)}
+.post{position:absolute;right:10px;top:10px;width:clamp(64px,17vw,84px);aspect-ratio:1;display:grid;place-items:center}
+.post svg{position:absolute;inset:0;width:100%;height:100%}
+.post .pm{position:relative;text-align:center;font:700 11px/1.1 var(--f-display);letter-spacing:.1em;text-transform:uppercase;color:var(--cocoa)}
+.post .pm b{display:block;font:400 clamp(17px,4.2vw,21px)/1 var(--f-serif);letter-spacing:0;margin-top:2px}
+
+/* letter */
+.letter{display:flex;flex-direction:column;gap:var(--space16);padding-inline:var(--space4)}
+.letter p{margin:0;max-width:62ch}
+.letter .hi{font:400 clamp(26px,6.4vw,32px)/1.15 var(--f-serif);font-style:italic}
+.sign{align-self:flex-end;font:italic 400 28px/1 var(--f-serif);color:var(--cobalt)}
+
+/* choices */
+.pick{display:flex;flex-direction:column;gap:var(--space16)}
+.pick h2{margin:0;text-align:center;font:700 14px/1.2 var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--mocha)}
+.tickets{display:grid;grid-template-columns:1fr 1fr;gap:var(--space16)}
+@media (max-width:460px){.tickets{grid-template-columns:1fr}}
+.ticket{
+  position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:flex-start;gap:var(--space4);
+  min-height:44px;padding:var(--space24) var(--space16) var(--space16) var(--space48);text-align:left;
+  background:var(--paper);color:var(--cocoa);border:2px solid var(--mocha);border-radius:var(--radiusMd);
+  box-shadow:var(--elev1);font:inherit;cursor:pointer;
+  transition:transform var(--durPop) var(--easeSpring),box-shadow var(--durPop) var(--easeOut),border-color var(--durProgress,250ms),background var(--durProgress,250ms);
+}
+.ticket:hover{transform:translateY(-3px);box-shadow:var(--elev3)}
+.ticket:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
+.tab{position:absolute;left:0;top:0;width:44px;height:44px;background:var(--cocoa);clip-path:polygon(0 0,100% 0,0 100%)}
+.tab span{position:absolute;left:5px;top:4px;font:800 13px/1 var(--f-display);color:var(--cream);letter-spacing:.04em}
+.ticket .day{font:700 14px/1.2 var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--mocha)}
+.ticket .date{font:400 clamp(38px,9vw,46px)/.95 var(--f-serif);color:var(--cocoa);font-variant-numeric:lining-nums}
+.ticket .time{font:600 16px/1.3 var(--f-sans);color:var(--cocoa)}
+.ticket .chosen{display:none;align-items:center;gap:6px;margin-top:var(--space8);padding:4px 10px;border-radius:var(--radiusPill);background:var(--cobalt);color:var(--cream);font:700 13px/1 var(--f-display);letter-spacing:.12em;text-transform:uppercase}
+.ticket .chosen svg{width:14px;height:14px}
+.ticket[aria-pressed="true"]{border-color:var(--cobalt);background:#eef3fb;box-shadow:var(--elev2)}
+.ticket[aria-pressed="true"] .tab{background:var(--cobalt)}
+.ticket[aria-pressed="true"] .chosen{display:inline-flex;animation:pop var(--durFeedback) var(--easeSpring)}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.busy{justify-self:center;align-self:center;min-height:44px;padding:8px 14px;background:none;border:2px dashed transparent;border-radius:var(--radiusPill);cursor:pointer;font:italic 400 16px/1.3 var(--f-sans);color:var(--mocha);text-decoration:underline;text-underline-offset:4px}
+.busy[aria-pressed="true"]{border-color:var(--mocha);color:var(--cocoa);text-decoration:none}
+.busy:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
+
+.field{display:flex;flex-direction:column;gap:var(--space4)}
+.field label{font:600 15px/1.45 var(--f-sans);color:var(--cocoa)}
+.field .hint{font:400 15px/1.45 var(--f-sans);color:var(--mocha)}
+textarea{width:100%;min-height:88px;resize:vertical;padding:12px 14px;border:2px solid var(--mocha);border-radius:var(--radiusSm);background:var(--paper);color:var(--cocoa);font:400 17px/1.5 var(--f-sans)}
+textarea::placeholder{color:#9a7c6f}
+textarea:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
+
+.send{
+  align-self:center;min-height:48px;padding:12px 32px;border:0;border-radius:var(--radiusPill);cursor:pointer;
+  background:var(--cobalt);color:var(--cream);font:800 18px/1 var(--f-display);letter-spacing:.1em;text-transform:uppercase;
+  box-shadow:var(--elevPress);transition:transform var(--durPress) var(--easeOut),box-shadow var(--durPress) var(--easeOut),opacity .2s;
+}
+.send:active:not(:disabled){transform:translateY(3px) scale(.97);box-shadow:var(--elevPressed)}
+.send:disabled{opacity:.45;cursor:default}
+.send:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px}
+
+/* result */
+.result{display:flex;flex-direction:column;gap:var(--space16);align-items:flex-start;padding:var(--space24);border-radius:var(--radiusMd);background:var(--cream)}
+.done{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:var(--radiusPill);font:800 16px/1 var(--f-display);letter-spacing:.12em;text-transform:uppercase;transform:rotate(-4deg)}
+.done svg{width:18px;height:18px}
+.done.ok{background:var(--cobalt);color:var(--cream)}
+.done.wait{background:transparent;color:var(--cocoa);border:2px dashed var(--mocha)}
+.thunk{animation:thunk var(--durPop) var(--easeSpring)}
+@keyframes thunk{0%{transform:scale(1.5) rotate(-12deg);opacity:0}100%{transform:scale(1) rotate(-4deg);opacity:1}}
+.result p{margin:0}
+.result .tag{font:400 22px/1.3 var(--f-serif);font-style:italic}
+.result .small{font:400 15px/1.45 var(--f-sans);color:var(--mocha)}
+.reply{width:100%;white-space:pre-wrap;padding:12px 14px;border-radius:var(--radiusSm);background:var(--paper);border:2px solid var(--sand);font:400 16px/1.5 var(--f-sans);user-select:all;-webkit-user-select:all}
+.row{display:flex;flex-wrap:wrap;gap:var(--space16);align-items:center}
+.ghost{min-height:44px;padding:10px 18px;border-radius:var(--radiusPill);border:2px solid var(--cobalt);background:var(--paper);color:var(--cobalt);font:700 15px/1 var(--f-display);letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.ghost:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
+.status{font:400 15px/1.3 var(--f-sans);color:var(--cobalt)}
+
+/* owner panel (Claude artifact only) */
+.owner{padding:var(--space16) var(--space24);border-radius:var(--radiusMd);border:2px dashed var(--mocha);display:flex;flex-direction:column;gap:var(--space8)}
+.owner h3{margin:0;font:700 14px/1.2 var(--f-display);letter-spacing:.12em;text-transform:uppercase;color:var(--mocha)}
+.owner p,.owner li{margin:0;font:400 16px/1.45 var(--f-sans)}
+.owner ul{margin:0;padding-left:1.1em}
+
+.foot{margin:0;text-align:center;font:italic 400 20px/1.3 var(--f-serif);color:var(--mocha)}
+
+/* entrance: springy rise in sequence, from a visible state */
+.rise{animation:rise var(--durPop) var(--easeSpring) both;animation-delay:var(--i,0ms)}
+@keyframes rise{from{transform:translateY(16px)}to{transform:none}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+</style>
+
+<main class="wrap">
+  <div class="top rise" style="--i:0ms"><span class="stamp">Hà Nội · cuối tháng 11</span></div>
+
+  <article class="card rise" style="--i:90ms" aria-label="Thư mời đi cà phê ở Hà Nội">
+    <div class="scene" id="scene">
+      <svg id="art" viewBox="0 0 640 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Tranh nét mực Hồ Gươm với Tháp Rùa, cầu Thê Húc, hàng đèn ven hồ và cành liễu">
+        <defs>
+          <pattern id="dotsLoose" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx="4.5" cy="4.5" r="1.3" fill="#1f5bb5"/></pattern>
+          <pattern id="dotsDense" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx="2.5" cy="2.5" r="1.4" fill="#1f5bb5"/></pattern>
+          <linearGradient id="fadeDown" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+          <mask id="skyMask"><rect width="640" height="210" fill="url(#fadeDown)"/></mask>
+          <linearGradient id="fadeUp" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+          <mask id="lakeMask"><rect y="250" width="640" height="150" fill="url(#fadeUp)"/></mask>
+        </defs>
+
+        <!-- far layer: sky tone, moon, sunburst, far trees -->
+        <g class="lyr" data-depth="4">
+          <rect x="-20" y="-10" width="680" height="220" class="tone1" mask="url(#skyMask)" opacity=".55"/>
+          <g transform="translate(140 92)">
+            <g class="ink thin" style="--d:0ms">
+              <path d="M0 -58V-44M0 44V58M-58 0H-44M44 0H58M-41 -41L-31 -31M31 31L41 41M-41 41L-31 31M31 -31L41 -41"/>
+              <path d="M-22 -54L-17 -41M17 41L22 54M-54 -22L-41 -17M41 17L54 22M22 -54L17 -41M-17 41L-22 54M-54 22L-41 17M41 -17L54 -22"/>
+            </g>
+            <circle r="32" class="spotfill"/>
+            <circle r="32" class="ink" style="--d:80ms"/>
+            <path class="ink thin" style="--d:200ms" d="M-12 -14a5 5 0 1 0 0.1 0M10 6a4 4 0 1 0 0.1 0M-2 16a3 3 0 1 0 0.1 0"/>
+          </g>
+          <path class="tone2" d="M-10 238 C30 196 70 214 96 200 C122 186 160 206 190 196 C224 184 256 210 290 200 C330 188 352 206 380 204 C420 200 440 182 476 192 C512 202 540 186 572 196 C604 206 630 194 650 204 V246 H-10Z" opacity=".55"/>
+          <path class="ink" style="--d:120ms" d="M-10 238 C30 196 70 214 96 200 C122 186 160 206 190 196 C224 184 256 210 290 200 C330 188 352 206 380 204 C420 200 440 182 476 192 C512 202 540 186 572 196 C604 206 630 194 650 204"/>
+        </g>
+
+        <!-- mid layer: shore line, lamps, bridge, tower, water -->
+        <g class="lyr" data-depth="9">
+          <path class="ink bold" style="--d:240ms" d="M-10 246 H650"/>
+          <g id="lamps"></g>
+
+          <!-- Thê Húc bridge -->
+          <g style="--d:420ms">
+            <path class="ink bold" style="--d:420ms" d="M430 248 Q520 196 652 214"/>
+            <path class="ink" style="--d:520ms" d="M430 248 Q520 210 652 226"/>
+            <path class="ink thin" style="--d:600ms" d="M452 236V246M474 227V240M498 219V234M522 213V229M546 209V226M570 207V224M594 206V223M618 207V224"/>
+          </g>
+
+          <!-- water -->
+          <rect y="250" width="640" height="150" class="tone1" mask="url(#lakeMask)" opacity=".5"/>
+          <path class="ripple" d="M20 278 H300 M360 278 H620"/>
+          <path class="ripple r2" d="M-10 302 H230 M290 302 H650"/>
+          <path class="ripple" d="M40 330 H260 M330 330 H600"/>
+          <path class="ripple r2" d="M-10 360 H640"/>
+          <g id="refl"></g>
+
+          <!-- Tháp Rùa on its islet -->
+          <g transform="translate(300 300)">
+            <ellipse cx="0" cy="8" rx="78" ry="13" class="tone2" opacity=".8"/>
+            <path class="ink" style="--d:300ms" d="M-78 8 C-60 -4 60 -4 78 8 C60 20 -60 20 -78 8Z"/>
+            <path class="ink thin" style="--d:340ms" d="M-58 2 C-50 -18 -40 -6 -34 -20 C-28 -6 -22 -14 -18 2M30 2 C36 -16 46 -8 52 -18 C58 -6 62 -4 64 4"/>
+            <path class="paperfill" d="M-30 2 V-34 H30 V2Z M-22 -34 V-60 H22 V-34Z M-13 -60 V-80 H13 V-60Z"/>
+            <path class="tone2" d="M-40 -34 L-30 -42 H30 L40 -34Z M-30 -60 L-22 -67 H22 L30 -60Z M-20 -80 L-13 -86 H13 L20 -80Z"/>
+            <path class="ink" style="--d:380ms" d="M-30 2 V-34 M30 2 V-34 M-40 -34 H40 L30 -42 H-30 Z"/>
+            <path class="ink" style="--d:460ms" d="M-22 -42 V-60 M22 -42 V-60 M-30 -60 H30 L22 -67 H-22 Z"/>
+            <path class="ink" style="--d:540ms" d="M-13 -67 V-80 M13 -67 V-80 M-20 -80 H20 L13 -86 H-13 Z M0 -86 V-100"/>
+            <path class="solid" d="M-19 2 V-10 a5 5 0 0 1 10 0 V2Z M-5 2 V-12 a5 5 0 0 1 10 0 V2Z M9 2 V-10 a5 5 0 0 1 10 0 V2Z M-4 -42 V-50 a4 4 0 0 1 8 0 V-42Z"/>
+            <circle cx="0" cy="-100" r="3" class="spotfill"/>
+            <!-- reflection -->
+            <g opacity=".35" transform="translate(0 32) scale(1 -.6)">
+              <path class="tone2" d="M-30 0 V36 H30 V0Z M-22 36 V60 H22 V36Z M-13 60 V78 H13 V60Z"/>
+            </g>
+          </g>
+        </g>
+
+        <!-- near layer: willow branch from the top left -->
+        <g class="lyr" data-depth="16">
+          <path class="ink bold" style="--d:640ms" d="M-20 -6 C60 6 120 2 200 -10"/>
+          <g id="willow"></g>
+        </g>
+      </svg>
+      <canvas id="petals" aria-hidden="true"></canvas>
+      <div class="post" aria-hidden="true">
+        <svg viewBox="0 0 100 100"><g fill="none" stroke="#4b2a22" stroke-width="1.6"><circle cx="50" cy="50" r="44" fill="#fffaf2"/><circle cx="50" cy="50" r="38" stroke-dasharray="3 3"/></g></svg>
+        <span class="pm">Hà Nội<b>26.11</b></span>
+      </div>
+      <p class="label">Hồ Gươm</p>
+    </div>
+
+    <div class="letter">
+      <p class="hi">Chào Minh Ngọc,</p>
+      <p>Cuối tháng 11 anh ra Hà Nội mấy hôm để dự đám cưới. Anh muốn nhân dịp này gặp em một buổi.</p>
+      <p>Nếu em rảnh, mình đi cà phê rồi dạo một vòng Hồ Gươm nhé. Em chọn giúp anh một buổi bên dưới.</p>
+      <p>Hà Nội em rành hơn anh, nên nếu em có quán nào quen thì cứ dẫn anh đi. Còn nếu em bận thì cũng không sao, mình hẹn dịp khác.</p>
+      <p class="sign">Hoàng</p>
+    </div>
+
+    <form class="pick" id="pick" novalidate>
+      <h2>Em chọn một buổi</h2>
+      <div class="tickets">
+        <button type="button" class="ticket" id="opt-thu" data-key="thu" aria-pressed="false">
+          <span class="tab" aria-hidden="true"><span>T5</span></span>
+          <span class="day">Tối Thứ Năm</span>
+          <span class="date">26/11</span>
+          <span class="time">Từ khoảng 19:00</span>
+          <span class="chosen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Đã chọn</span>
+        </button>
+        <button type="button" class="ticket" id="opt-cn" data-key="cn" aria-pressed="false">
+          <span class="tab" aria-hidden="true"><span>CN</span></span>
+          <span class="day">Sáng Chủ Nhật</span>
+          <span class="date">29/11</span>
+          <span class="time">Khoảng 8:00 đến 10:30</span>
+          <span class="chosen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>Đã chọn</span>
+        </button>
+      </div>
+      <button type="button" class="busy" id="opt-busy" data-key="busy" aria-pressed="false">Lần này em bận, hẹn anh dịp khác</button>
+
+      <div class="field">
+        <label for="note">Lời nhắn hoặc quán em muốn dẫn anh đi</label>
+        <textarea id="note" maxlength="500" placeholder="Ví dụ: một quán cà phê em thích ở phố cổ"></textarea>
+        <span class="hint">Không bắt buộc</span>
+      </div>
+
+      <button type="submit" class="send" id="send" disabled>Gửi cho anh</button>
+
+      <div class="result" id="result" hidden aria-live="polite">
+        <span class="done" id="done"></span>
+        <p class="tag" id="thanks"></p>
+        <p class="small" id="howto"></p>
+        <div class="reply" id="reply"></div>
+        <div class="row">
+          <button type="button" class="ghost" id="copy">Chép lời nhắn</button>
+          <span class="status" id="copied" aria-live="polite"></span>
+        </div>
+      </div>
+    </form>
+  </article>
+
+  <section class="owner" id="owner" hidden aria-live="polite">
+    <h3>Chỉ anh thấy phần này</h3>
+    <div id="owner-body"><p>Chưa có lựa chọn nào được lưu trên thiệp.</p></div>
+  </section>
+
+  <p class="foot rise" style="--i:180ms">Hẹn gặp em ở Hà Nội</p>
+</main>
+
+<script>
+(function(){
+  /* Dán đường link Web app của Google Apps Script vào giữa hai dấu nháy đơn */
+  const ENDPOINT='%%ENDPOINT%%';
+  const NS='http://www.w3.org/2000/svg';
+  const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const art=document.getElementById('art');
+
+  /* ---------- build repeated scene parts ---------- */
+  function el(tag,attrs,parent){const n=document.createElementNS(NS,tag);for(const k in attrs)n.setAttribute(k,attrs[k]);parent.appendChild(n);return n;}
+  const lamps=document.getElementById('lamps'),refl=document.getElementById('refl');
+  for(let i=0;i<9;i++){
+    const x=24+i*48; if(x>410)break;
+    el('path',{d:'M'+x+' 246 V226','class':'ink thin',style:'--d:'+(260+i*30)+'ms'},lamps);
+    el('circle',{cx:x,cy:222,r:5,'class':'glint',style:'animation-delay:'+(i*0.37).toFixed(2)+'s'},lamps);
+    el('path',{d:'M'+(x-6)+' '+(262+(i%2)*6)+' H'+(x+6)+' M'+(x-4)+' '+(276+(i%3)*5)+' H'+(x+4),'class':'refl',style:'animation-delay:'+(i*0.29).toFixed(2)+'s'},refl);
+  }
+  const willow=document.getElementById('willow');
+  for(let i=0;i<11;i++){
+    const x=6+i*17+(i%3)*4, len=70+((i*37)%60);
+    const g=el('g',{'class':'sway',style:'animation-delay:-'+(i*0.55).toFixed(2)+'s;animation-duration:'+(5+(i%4))+'s'},willow);
+    el('path',{d:'M'+x+' '+(2-(i*0.6))+' C'+(x-6)+' '+(len*0.4)+' '+(x+6)+' '+(len*0.7)+' '+(x-2)+' '+len,'class':'ink thin',style:'--d:'+(700+i*40)+'ms'},g);
+    for(let k=1;k<5;k++){
+      const y=len*k/5, lx=x+(k%2?-4:4);
+      el('path',{d:'M'+lx+' '+y+' q'+(k%2?-5:5)+' 4 '+(k%2?-2:2)+' 10','class':'ink thin',style:'--d:'+(760+i*40+k*20)+'ms'},g);
+    }
+  }
+
+  /* ---------- ink draw on first view ---------- */
+  if(!reduce){
+    art.querySelectorAll('.ink').forEach(p=>p.setAttribute('pathLength','1'));
+    art.classList.add('drawing');
+    setTimeout(()=>{art.classList.remove('drawing');art.querySelectorAll('.ink').forEach(p=>p.removeAttribute('pathLength'));},2600);
+  }
+
+  /* ---------- tilt with pointer or touch ---------- */
+  const scene=document.getElementById('scene');
+  const layers=[...art.querySelectorAll('.lyr')];
+  function tilt(nx,ny){layers.forEach(l=>{const d=+l.dataset.depth;l.style.transform='translate('+(nx*d).toFixed(1)+'px,'+(ny*d*.5).toFixed(1)+'px)';});}
+  if(!reduce){
+    scene.addEventListener('pointermove',e=>{const r=scene.getBoundingClientRect();tilt(((e.clientX-r.left)/r.width-.5)*-2,((e.clientY-r.top)/r.height-.5)*-2);});
+    scene.addEventListener('pointerleave',()=>tilt(0,0));
+    scene.addEventListener('pointerup',()=>setTimeout(()=>tilt(0,0),600));
+  }
+
+  /* ---------- hoa sữa petals and autumn leaves ---------- */
+  const cv=document.getElementById('petals'),ctx=cv.getContext('2d');
+  let W=0,H=0,parts=[],raf=0,last=0;
+  function size(){const r=cv.getBoundingClientRect(),dpr=Math.min(2,window.devicePixelRatio||1);W=r.width;H=r.height;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);}
+  function spawn(init){const leaf=Math.random()<.35;return{x:Math.random()*W,y:init?Math.random()*H:-12,s:leaf?5+Math.random()*3:2.2+Math.random()*1.4,vy:leaf?18+Math.random()*14:10+Math.random()*10,ph:Math.random()*6.28,rot:Math.random()*6.28,vr:(Math.random()-.5)*2,leaf};}
+  function drawPart(p){
+    ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.lineWidth=1.2;ctx.strokeStyle='#1f5bb5';
+    if(p.leaf){ctx.fillStyle='#ffd23a';ctx.beginPath();ctx.ellipse(0,0,p.s,p.s*.5,0,0,6.283);ctx.fill();ctx.stroke();ctx.beginPath();ctx.moveTo(-p.s,0);ctx.lineTo(p.s,0);ctx.stroke();}
+    else{ctx.fillStyle='#fffaf2';for(let k=0;k<5;k++){const a=k*1.2566;ctx.beginPath();ctx.arc(Math.cos(a)*p.s,Math.sin(a)*p.s,p.s*.75,0,6.283);ctx.fill();ctx.stroke();}ctx.fillStyle='#1f5bb5';ctx.beginPath();ctx.arc(0,0,p.s*.45,0,6.283);ctx.fill();}
+    ctx.restore();
+  }
+  function frame(t){
+    const dt=Math.min(.05,(t-(last||t))/1000);last=t;
+    ctx.clearRect(0,0,W,H);
+    for(const p of parts){p.y+=p.vy*dt;p.ph+=dt*1.4;p.x+=Math.sin(p.ph)*18*dt;p.rot+=p.vr*dt;if(p.y>H+14){Object.assign(p,spawn(false));}drawPart(p);}
+    raf=requestAnimationFrame(frame);
+  }
+  function startPetals(){cancelAnimationFrame(raf);size();if(reduce)return;if(!parts.length)parts=Array.from({length:16},()=>spawn(true));last=0;raf=requestAnimationFrame(frame);}
+  startPetals();
+  let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{parts=[];startPetals();},150);});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelAnimationFrame(raf);else startPetals();});
+
+  /* ---------- choosing and replying ---------- */
+  const LABELS={thu:'Tối Thứ Năm 26/11, từ khoảng 19:00',cn:'Sáng Chủ Nhật 29/11, khoảng 8:00 đến 10:30',busy:'Lần này em bận, hẹn anh dịp khác'};
+  const ICON_OK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>';
+  const opts=[...document.querySelectorAll('[data-key]')];
+  const send=document.getElementById('send'),note=document.getElementById('note'),result=document.getElementById('result');
+  let choice=null,saving=false,db=null,isOwner=false;
+
+  opts.forEach(b=>b.addEventListener('click',()=>{choice=b.dataset.key;opts.forEach(o=>o.setAttribute('aria-pressed',String(o===b)));send.disabled=false;if(send.textContent!=='Gửi cho anh')send.textContent='Gửi cho anh';}));
+
+  function replyText(){let s=choice==='busy'?'Anh Hoàng ơi, lần này em bận rồi, hẹn anh dịp khác nhé.':'Anh Hoàng ơi, em chọn buổi '+LABELS[choice]+'.';const n=note.value.trim();if(n)s+='\n'+n;return s;}
+
+  document.getElementById('pick').addEventListener('submit',async e=>{
+    e.preventDefault();
+    if(!choice||saving)return;
+    saving=true;send.disabled=true;send.textContent='Đang gửi';
+    let sent=false;
+    if(ENDPOINT.indexOf('script.google.com')>-1){
+      try{const res=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({choice,note:note.value.trim().slice(0,500)})});const out=await res.json();sent=!!(out&&out.ok);}catch(err){sent=false;}
+    }
+    if(!sent&&db){
+      try{await db.collection('replies').doc(String(Date.now())).set({choice,label:LABELS[choice],note:note.value.trim().slice(0,500),at:new Date().toISOString()});sent=true;}catch(err){}
+    }
+    const done=document.getElementById('done');
+    done.className='done '+(sent?'ok':'wait');
+    done.innerHTML=sent?ICON_OK+'Đã gửi':'Chưa gửi được';
+    document.getElementById('thanks').textContent=choice==='busy'?'Cảm ơn em đã trả lời. Hẹn em dịp khác nhé.':'Cảm ơn em. Anh mong đến buổi đó lắm.';
+    document.getElementById('howto').textContent=sent?'Anh đã nhận được lựa chọn của em. Nếu muốn, em cũng có thể chép lời nhắn bên dưới để nhắn anh.':'Thiệp chưa gửi được lúc này. Em chép lời nhắn bên dưới rồi gửi anh qua Messenger hoặc Zalo giúp anh nhé.';
+    document.getElementById('reply').textContent=replyText();
+    result.hidden=false;
+    done.classList.remove('thunk');void done.offsetWidth;done.classList.add('thunk');
+    saving=false;
+    if(sent){send.textContent='Đã gửi';send.disabled=true;loadOwner();}else{send.textContent='Gửi lại';send.disabled=false;}
+  });
+
+  document.getElementById('copy').addEventListener('click',()=>{
+    const el2=document.getElementById('reply'),st=document.getElementById('copied');
+    const fallback=()=>{const r=document.createRange();r.selectNodeContents(el2);const s=getSelection();s.removeAllRanges();s.addRange(r);st.textContent='Đã chọn sẵn lời nhắn, em bấm sao chép nhé.';};
+    try{navigator.clipboard.writeText(el2.textContent).then(()=>{st.textContent='Đã chép.';},fallback);}catch(err){fallback();}
+  });
+
+  /* ---------- Claude artifact only: stored replies for the owner ---------- */
+  async function loadOwner(){
+    if(!db||!isOwner)return;
+    try{
+      const snap=await db.collection('replies').get();const body=document.getElementById('owner-body');
+      if(snap.empty){body.innerHTML='<p>Chưa có lựa chọn nào được lưu trên thiệp.</p>';return;}
+      const ul=document.createElement('ul');
+      snap.docs.map(d=>d.data()).sort((a,b)=>String(b.at).localeCompare(String(a.at))).forEach(r=>{const li=document.createElement('li');const when=r.at?new Date(r.at).toLocaleString('vi-VN'):'';li.textContent=(r.label||r.choice)+(r.note?' · Lời nhắn: '+r.note:'')+(when?' ('+when+')':'');ul.appendChild(li);});
+      body.replaceChildren(ul);
+    }catch(err){}
+  }
+  if(window.claude&&typeof window.claude.use==='function'){
+    claude.use('db').then(d=>{db=d;}).catch(()=>{});
+    claude.use('user').then(async u=>{isOwner=u?await u.isOwner():false;if(isOwner){document.getElementById('owner').hidden=false;let tries=0;const wait=()=>{if(db)loadOwner();else if(++tries<20)setTimeout(wait,500);};wait();}}).catch(()=>{});
+  }
+})();
+</script>
