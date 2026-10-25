@@ -17,12 +17,12 @@
   --paper:#fffaf2;
   --mocha:#7a5648;
   --sand:#d9c3a3;
-  --spot:#ffd23a;
-  --night:#0d2350;
-  --nightLow:#1f5bb5;
-  --sceneInk:#f4e6cf;
-  --pink:#f07ccb;
-  --leaf:#9fd63c;
+  --spot:#e9bf5a;
+  --night:#071430;
+  --nightLow:#173a78;
+  --sceneInk:#e3d5bc;
+  --pink:#c27aa3;
+  --leaf:#7ea350;
   --burgundy:#6e2438;
   --f-display:"Barlow Condensed","Arial Narrow",sans-serif;
   --f-sans:Barlow,Arial,sans-serif;
@@ -60,7 +60,7 @@ body{
 @media (min-width:560px){.card{padding:var(--space24)}}
 
 /* scene */
-.scene{position:relative;aspect-ratio:16/10;max-width:100%;border-radius:12px;overflow:hidden;background:linear-gradient(180deg,var(--night) 0%,#163a80 48%,var(--nightLow) 62%,#123170 100%);border:2px solid var(--cocoa);touch-action:pan-y;cursor:grab}
+.scene{position:relative;aspect-ratio:16/10;max-width:100%;border-radius:12px;overflow:hidden;background:linear-gradient(180deg,var(--night) 0%,#0e2654 48%,var(--nightLow) 62%,#0a1d42 100%);border:2px solid var(--cocoa);touch-action:pan-y;cursor:grab}
 .scene{}
 @media (max-width:460px){.scene{aspect-ratio:5/4}}
 .scene svg,.scene canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -71,19 +71,19 @@ body{
 .ink.bold{stroke-width:3}
 .tone1{fill:url(#dotsLoose)}
 .tone2{fill:url(#dotsDense)}
-.solid{fill:var(--spot);filter:drop-shadow(0 0 3px rgba(255,210,58,.9))}
+.solid{fill:var(--spot);filter:drop-shadow(0 0 2px rgba(233,191,90,.6))}
 .ink.pink{stroke:var(--pink)}
 .ink.green{stroke:var(--leaf)}
 .ink.dark{stroke:#c79a1c}
-.glow{filter:drop-shadow(0 0 10px rgba(255,210,58,.75))}
+.glow{filter:drop-shadow(0 0 7px rgba(233,191,90,.45))}
 .star{fill:var(--sceneInk);animation:twinkle 3s ease-in-out infinite}
 .spotfill{fill:var(--spot)}
-.paperfill{fill:#fff1d6}
-.ripple{fill:none;stroke:var(--sceneInk);stroke-opacity:.55;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:46 18 12 18;animation:flow 9s linear infinite}
+.paperfill{fill:#e8dcc4}
+.ripple{fill:none;stroke:var(--sceneInk);stroke-opacity:.4;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:46 18 12 18;animation:flow 9s linear infinite}
 .ripple.r2{animation-duration:13s;animation-direction:reverse;opacity:.7}
 @keyframes flow{to{stroke-dashoffset:-188}}
-.glint{fill:var(--spot);stroke:var(--sceneInk);stroke-width:1.2;filter:drop-shadow(0 0 6px rgba(255,210,58,.95));animation:twinkle 2.6s ease-in-out infinite}
-.refl{stroke:var(--spot);stroke-width:3;filter:drop-shadow(0 0 3px rgba(255,210,58,.8));stroke-linecap:round;animation:twinkle 3.2s ease-in-out infinite}
+.glint{fill:var(--spot);stroke:var(--sceneInk);stroke-width:1.2;filter:drop-shadow(0 0 4px rgba(233,191,90,.6));animation:twinkle 2.6s ease-in-out infinite}
+.refl{stroke:var(--spot);stroke-width:3;filter:drop-shadow(0 0 2px rgba(233,191,90,.5));stroke-linecap:round;animation:twinkle 3.2s ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:1}50%{opacity:.35}}
 .sway{transform-box:fill-box;transform-origin:50% 0;animation:sway 6s ease-in-out infinite}
 @keyframes sway{0%,100%{transform:rotate(1.5deg)}50%{transform:rotate(-1.5deg)}}
@@ -195,7 +195,7 @@ textarea:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
       <svg id="art" viewBox="0 0 640 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Tranh nét mực Hồ Gươm về đêm với Tháp Rùa, cầu Thê Húc, hàng đèn ven hồ và cành liễu">
         <defs>
           <pattern id="dotsLoose" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx="4.5" cy="4.5" r="1.1" fill="#f4e6cf"/></pattern>
-          <pattern id="dotsDense" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx="2.5" cy="2.5" r="1.4" fill="#6f9be6"/></pattern>
+          <pattern id="dotsDense" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx="2.5" cy="2.5" r="1.4" fill="#4a6fae"/></pattern>
           <linearGradient id="fadeDown" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
           <mask id="skyMask"><rect width="640" height="210" fill="url(#fadeDown)"/></mask>
           <linearGradient id="fadeUp" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
@@ -211,7 +211,7 @@ textarea:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
               <path d="M0 -58V-44M0 44V58M-58 0H-44M44 0H58M-41 -41L-31 -31M31 31L41 41M-41 41L-31 31M31 -31L41 -41"/>
               <path d="M-22 -54L-17 -41M17 41L22 54M-54 -22L-41 -17M41 17L54 22M22 -54L17 -41M-17 41L-22 54M-54 22L-41 17M41 -17L54 -22"/>
             </g>
-            <circle r="46" fill="#ffd23a" opacity=".16"/>
+            <circle r="44" fill="#e9bf5a" opacity=".1"/>
             <circle r="32" class="spotfill glow"/>
             <circle r="32" class="ink" style="--d:80ms"/>
             <path class="ink thin dark" style="--d:200ms" d="M-12 -14a5 5 0 1 0 0.1 0M10 6a4 4 0 1 0 0.1 0M-2 16a3 3 0 1 0 0.1 0"/>
@@ -384,9 +384,9 @@ textarea:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
   function size(){const r=cv.getBoundingClientRect(),dpr=Math.min(2,window.devicePixelRatio||1);W=r.width;H=r.height;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);}
   function spawn(init){const leaf=Math.random()<.35;return{x:Math.random()*W,y:init?Math.random()*H:-12,s:leaf?5+Math.random()*3:2.2+Math.random()*1.4,vy:leaf?18+Math.random()*14:10+Math.random()*10,ph:Math.random()*6.28,rot:Math.random()*6.28,vr:(Math.random()-.5)*2,leaf};}
   function drawPart(p){
-    ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.lineWidth=1.2;ctx.strokeStyle=p.leaf?'#7a5a10':'#c9d8f2';
-    if(p.leaf){ctx.fillStyle='#ffd23a';ctx.beginPath();ctx.ellipse(0,0,p.s,p.s*.5,0,0,6.283);ctx.fill();ctx.stroke();ctx.beginPath();ctx.moveTo(-p.s,0);ctx.lineTo(p.s,0);ctx.stroke();}
-    else{ctx.fillStyle='#fffaf2';for(let k=0;k<5;k++){const a=k*1.2566;ctx.beginPath();ctx.arc(Math.cos(a)*p.s,Math.sin(a)*p.s,p.s*.75,0,6.283);ctx.fill();ctx.stroke();}ctx.fillStyle='#ffd23a';ctx.beginPath();ctx.arc(0,0,p.s*.45,0,6.283);ctx.fill();}
+    ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.lineWidth=1.2;ctx.strokeStyle=p.leaf?'#6b4f12':'#9fb2d4';
+    if(p.leaf){ctx.fillStyle='#d9ae4c';ctx.beginPath();ctx.ellipse(0,0,p.s,p.s*.5,0,0,6.283);ctx.fill();ctx.stroke();ctx.beginPath();ctx.moveTo(-p.s,0);ctx.lineTo(p.s,0);ctx.stroke();}
+    else{ctx.fillStyle='#e8dfcf';for(let k=0;k<5;k++){const a=k*1.2566;ctx.beginPath();ctx.arc(Math.cos(a)*p.s,Math.sin(a)*p.s,p.s*.75,0,6.283);ctx.fill();ctx.stroke();}ctx.fillStyle='#d9ae4c';ctx.beginPath();ctx.arc(0,0,p.s*.45,0,6.283);ctx.fill();}
     ctx.restore();
   }
   function frame(t){
