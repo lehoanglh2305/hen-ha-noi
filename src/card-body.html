@@ -12,6 +12,11 @@
   --mocha:#7a5648;
   --sand:#d9c3a3;
   --spot:#ffd23a;
+  --night:#0d2350;
+  --nightLow:#1f5bb5;
+  --sceneInk:#f4e6cf;
+  --pink:#f07ccb;
+  --leaf:#9fd63c;
   --burgundy:#6e2438;
   --f-display:"Barlow Condensed","Arial Narrow",sans-serif;
   --f-sans:Barlow,Arial,sans-serif;
@@ -49,25 +54,30 @@ body{
 @media (min-width:560px){.card{padding:var(--space24)}}
 
 /* scene */
-.scene{position:relative;aspect-ratio:16/10;max-width:100%;border-radius:12px;overflow:hidden;background:var(--cream);border:2px solid var(--cocoa);touch-action:pan-y;cursor:grab}
+.scene{position:relative;aspect-ratio:16/10;max-width:100%;border-radius:12px;overflow:hidden;background:linear-gradient(180deg,var(--night) 0%,#163a80 48%,var(--nightLow) 62%,#123170 100%);border:2px solid var(--cocoa);touch-action:pan-y;cursor:grab}
 .scene{}
 @media (max-width:460px){.scene{aspect-ratio:5/4}}
 .scene svg,.scene canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .scene canvas{pointer-events:none}
 .scene .lyr{transition:transform .5s var(--easeOut)}
-.ink{fill:none;stroke:var(--cobalt);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.ink{fill:none;stroke:var(--sceneInk);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .ink.thin{stroke-width:1.4}
 .ink.bold{stroke-width:3}
 .tone1{fill:url(#dotsLoose)}
 .tone2{fill:url(#dotsDense)}
-.solid{fill:var(--cobalt)}
+.solid{fill:var(--spot);filter:drop-shadow(0 0 3px rgba(255,210,58,.9))}
+.ink.pink{stroke:var(--pink)}
+.ink.green{stroke:var(--leaf)}
+.ink.dark{stroke:#c79a1c}
+.glow{filter:drop-shadow(0 0 10px rgba(255,210,58,.75))}
+.star{fill:var(--sceneInk);animation:twinkle 3s ease-in-out infinite}
 .spotfill{fill:var(--spot)}
-.paperfill{fill:var(--paper)}
-.ripple{fill:none;stroke:var(--cobalt);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:46 18 12 18;animation:flow 9s linear infinite}
+.paperfill{fill:#fff1d6}
+.ripple{fill:none;stroke:var(--sceneInk);stroke-opacity:.55;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:46 18 12 18;animation:flow 9s linear infinite}
 .ripple.r2{animation-duration:13s;animation-direction:reverse;opacity:.7}
 @keyframes flow{to{stroke-dashoffset:-188}}
-.glint{fill:var(--spot);stroke:var(--cobalt);stroke-width:1.2;animation:twinkle 2.6s ease-in-out infinite}
-.refl{stroke:var(--spot);stroke-width:3;stroke-linecap:round;animation:twinkle 3.2s ease-in-out infinite}
+.glint{fill:var(--spot);stroke:var(--sceneInk);stroke-width:1.2;filter:drop-shadow(0 0 6px rgba(255,210,58,.95));animation:twinkle 2.6s ease-in-out infinite}
+.refl{stroke:var(--spot);stroke-width:3;filter:drop-shadow(0 0 3px rgba(255,210,58,.8));stroke-linecap:round;animation:twinkle 3.2s ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:1}50%{opacity:.35}}
 .sway{transform-box:fill-box;transform-origin:50% 0;animation:sway 6s ease-in-out infinite}
 @keyframes sway{0%,100%{transform:rotate(1.5deg)}50%{transform:rotate(-1.5deg)}}
@@ -172,10 +182,10 @@ textarea:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
 
   <article class="card rise" style="--i:90ms" aria-label="Thư mời đi cà phê ở Hà Nội">
     <div class="scene" id="scene">
-      <svg id="art" viewBox="0 0 640 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Tranh nét mực Hồ Gươm với Tháp Rùa, cầu Thê Húc, hàng đèn ven hồ và cành liễu">
+      <svg id="art" viewBox="0 0 640 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Tranh nét mực Hồ Gươm về đêm với Tháp Rùa, cầu Thê Húc, hàng đèn ven hồ và cành liễu">
         <defs>
-          <pattern id="dotsLoose" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx="4.5" cy="4.5" r="1.3" fill="#1f5bb5"/></pattern>
-          <pattern id="dotsDense" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx="2.5" cy="2.5" r="1.4" fill="#1f5bb5"/></pattern>
+          <pattern id="dotsLoose" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx="4.5" cy="4.5" r="1.1" fill="#f4e6cf"/></pattern>
+          <pattern id="dotsDense" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx="2.5" cy="2.5" r="1.4" fill="#6f9be6"/></pattern>
           <linearGradient id="fadeDown" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
           <mask id="skyMask"><rect width="640" height="210" fill="url(#fadeDown)"/></mask>
           <linearGradient id="fadeUp" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
@@ -184,17 +194,19 @@ textarea:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
 
         <!-- far layer: sky tone, moon, sunburst, far trees -->
         <g class="lyr" data-depth="4">
-          <rect x="-20" y="-10" width="680" height="220" class="tone1" mask="url(#skyMask)" opacity=".55"/>
+          <g id="stars"></g>
+          <rect x="-20" y="-10" width="680" height="220" class="tone1" mask="url(#skyMask)" opacity=".18"/>
           <g transform="translate(140 92)">
             <g class="ink thin" style="--d:0ms">
               <path d="M0 -58V-44M0 44V58M-58 0H-44M44 0H58M-41 -41L-31 -31M31 31L41 41M-41 41L-31 31M31 -31L41 -41"/>
               <path d="M-22 -54L-17 -41M17 41L22 54M-54 -22L-41 -17M41 17L54 22M22 -54L17 -41M-17 41L-22 54M-54 22L-41 17M41 -17L54 -22"/>
             </g>
-            <circle r="32" class="spotfill"/>
+            <circle r="46" fill="#ffd23a" opacity=".16"/>
+            <circle r="32" class="spotfill glow"/>
             <circle r="32" class="ink" style="--d:80ms"/>
-            <path class="ink thin" style="--d:200ms" d="M-12 -14a5 5 0 1 0 0.1 0M10 6a4 4 0 1 0 0.1 0M-2 16a3 3 0 1 0 0.1 0"/>
+            <path class="ink thin dark" style="--d:200ms" d="M-12 -14a5 5 0 1 0 0.1 0M10 6a4 4 0 1 0 0.1 0M-2 16a3 3 0 1 0 0.1 0"/>
           </g>
-          <path class="tone2" d="M-10 238 C30 196 70 214 96 200 C122 186 160 206 190 196 C224 184 256 210 290 200 C330 188 352 206 380 204 C420 200 440 182 476 192 C512 202 540 186 572 196 C604 206 630 194 650 204 V246 H-10Z" opacity=".55"/>
+          <path class="tone2" style="opacity:.75" d="M-10 238 C30 196 70 214 96 200 C122 186 160 206 190 196 C224 184 256 210 290 200 C330 188 352 206 380 204 C420 200 440 182 476 192 C512 202 540 186 572 196 C604 206 630 194 650 204 V246 H-10Z" opacity=".55"/>
           <path class="ink" style="--d:120ms" d="M-10 238 C30 196 70 214 96 200 C122 186 160 206 190 196 C224 184 256 210 290 200 C330 188 352 206 380 204 C420 200 440 182 476 192 C512 202 540 186 572 196 C604 206 630 194 650 204"/>
         </g>
 
@@ -205,18 +217,19 @@ textarea:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
 
           <!-- Thê Húc bridge -->
           <g style="--d:420ms">
-            <path class="ink bold" style="--d:420ms" d="M430 248 Q520 196 652 214"/>
-            <path class="ink" style="--d:520ms" d="M430 248 Q520 210 652 226"/>
-            <path class="ink thin" style="--d:600ms" d="M452 236V246M474 227V240M498 219V234M522 213V229M546 209V226M570 207V224M594 206V223M618 207V224"/>
+            <path class="ink bold pink" style="--d:420ms" d="M430 248 Q520 196 652 214"/>
+            <path class="ink pink" style="--d:520ms" d="M430 248 Q520 210 652 226"/>
+            <path class="ink thin pink" style="--d:600ms" d="M452 236V246M474 227V240M498 219V234M522 213V229M546 209V226M570 207V224M594 206V223M618 207V224"/>
           </g>
 
           <!-- water -->
-          <rect y="250" width="640" height="150" class="tone1" mask="url(#lakeMask)" opacity=".5"/>
+          <rect y="250" width="640" height="150" class="tone1" mask="url(#lakeMask)" opacity=".14"/>
           <path class="ripple" d="M20 278 H300 M360 278 H620"/>
           <path class="ripple r2" d="M-10 302 H230 M290 302 H650"/>
           <path class="ripple" d="M40 330 H260 M330 330 H600"/>
           <path class="ripple r2" d="M-10 360 H640"/>
           <g id="refl"></g>
+          <path class="refl" d="M124 268 H156 M118 286 H162 M128 304 H152 M134 322 H146"/>
 
           <!-- Tháp Rùa on its islet -->
           <g transform="translate(300 300)">
@@ -239,7 +252,7 @@ textarea:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
 
         <!-- near layer: willow branch from the top left -->
         <g class="lyr" data-depth="16">
-          <path class="ink bold" style="--d:640ms" d="M-20 -6 C60 6 120 2 200 -10"/>
+          <path class="ink bold green" style="--d:640ms" d="M-20 -6 C60 6 120 2 200 -10"/>
           <g id="willow"></g>
         </g>
       </svg>
@@ -325,14 +338,16 @@ textarea:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
     el('circle',{cx:x,cy:222,r:5,'class':'glint',style:'animation-delay:'+(i*0.37).toFixed(2)+'s'},lamps);
     el('path',{d:'M'+(x-6)+' '+(262+(i%2)*6)+' H'+(x+6)+' M'+(x-4)+' '+(276+(i%3)*5)+' H'+(x+4),'class':'refl',style:'animation-delay:'+(i*0.29).toFixed(2)+'s'},refl);
   }
+  const stars=document.getElementById('stars');
+  for(let i=0;i<34;i++){const x=(i*97)%640,y=8+((i*53)%150);if(x<200&&y<150&&x>80)continue;el('circle',{cx:x,cy:y,r:(i%4===0?1.8:1.1),'class':'star',style:'animation-delay:-'+((i*0.41)%3).toFixed(2)+'s'},stars);}
   const willow=document.getElementById('willow');
   for(let i=0;i<11;i++){
     const x=6+i*17+(i%3)*4, len=70+((i*37)%60);
     const g=el('g',{'class':'sway',style:'animation-delay:-'+(i*0.55).toFixed(2)+'s;animation-duration:'+(5+(i%4))+'s'},willow);
-    el('path',{d:'M'+x+' '+(2-(i*0.6))+' C'+(x-6)+' '+(len*0.4)+' '+(x+6)+' '+(len*0.7)+' '+(x-2)+' '+len,'class':'ink thin',style:'--d:'+(700+i*40)+'ms'},g);
+    el('path',{d:'M'+x+' '+(2-(i*0.6))+' C'+(x-6)+' '+(len*0.4)+' '+(x+6)+' '+(len*0.7)+' '+(x-2)+' '+len,'class':'ink thin green',style:'--d:'+(700+i*40)+'ms'},g);
     for(let k=1;k<5;k++){
       const y=len*k/5, lx=x+(k%2?-4:4);
-      el('path',{d:'M'+lx+' '+y+' q'+(k%2?-5:5)+' 4 '+(k%2?-2:2)+' 10','class':'ink thin',style:'--d:'+(760+i*40+k*20)+'ms'},g);
+      el('path',{d:'M'+lx+' '+y+' q'+(k%2?-5:5)+' 4 '+(k%2?-2:2)+' 10','class':'ink thin green',style:'--d:'+(760+i*40+k*20)+'ms'},g);
     }
   }
 
@@ -359,9 +374,9 @@ textarea:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
   function size(){const r=cv.getBoundingClientRect(),dpr=Math.min(2,window.devicePixelRatio||1);W=r.width;H=r.height;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);}
   function spawn(init){const leaf=Math.random()<.35;return{x:Math.random()*W,y:init?Math.random()*H:-12,s:leaf?5+Math.random()*3:2.2+Math.random()*1.4,vy:leaf?18+Math.random()*14:10+Math.random()*10,ph:Math.random()*6.28,rot:Math.random()*6.28,vr:(Math.random()-.5)*2,leaf};}
   function drawPart(p){
-    ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.lineWidth=1.2;ctx.strokeStyle='#1f5bb5';
+    ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.lineWidth=1.2;ctx.strokeStyle=p.leaf?'#7a5a10':'#c9d8f2';
     if(p.leaf){ctx.fillStyle='#ffd23a';ctx.beginPath();ctx.ellipse(0,0,p.s,p.s*.5,0,0,6.283);ctx.fill();ctx.stroke();ctx.beginPath();ctx.moveTo(-p.s,0);ctx.lineTo(p.s,0);ctx.stroke();}
-    else{ctx.fillStyle='#fffaf2';for(let k=0;k<5;k++){const a=k*1.2566;ctx.beginPath();ctx.arc(Math.cos(a)*p.s,Math.sin(a)*p.s,p.s*.75,0,6.283);ctx.fill();ctx.stroke();}ctx.fillStyle='#1f5bb5';ctx.beginPath();ctx.arc(0,0,p.s*.45,0,6.283);ctx.fill();}
+    else{ctx.fillStyle='#fffaf2';for(let k=0;k<5;k++){const a=k*1.2566;ctx.beginPath();ctx.arc(Math.cos(a)*p.s,Math.sin(a)*p.s,p.s*.75,0,6.283);ctx.fill();ctx.stroke();}ctx.fillStyle='#ffd23a';ctx.beginPath();ctx.arc(0,0,p.s*.45,0,6.283);ctx.fill();}
     ctx.restore();
   }
   function frame(t){
